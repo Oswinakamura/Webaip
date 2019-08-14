@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PRUEBAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="PERSONA">
+          <Key>
+            <PropertyRef Name="ID_P" />
+          </Key>
+          <Property Name="ID_P" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="APELLIDO" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TAREA">
+          <Key>
+            <PropertyRef Name="ID_T" />
+          </Key>
+          <Property Name="ID_T" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="ID_P" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK1">
+          <End Role="PERSONA" Type="Self.PERSONA" Multiplicity="1" />
+          <End Role="TAREA" Type="Self.TAREA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONA">
+              <PropertyRef Name="ID_P" />
+            </Principal>
+            <Dependent Role="TAREA">
+              <PropertyRef Name="ID_P" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SPA_DELETEPERSONA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_P" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SPA_DELETETAREA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_T" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SPA_INSERTPERSONA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NOMBRE" Type="varchar" Mode="In" />
+          <Parameter Name="APELLIDO" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SPA_INSERTTAREA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DESCRIPCION" Type="varchar" Mode="In" />
+          <Parameter Name="ID_P" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SPA_UPDATEPERSONA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_P" Type="int" Mode="In" />
+          <Parameter Name="NOMBRE" Type="varchar" Mode="In" />
+          <Parameter Name="APELLIDO" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SPA_UPDATETARE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_T" Type="int" Mode="In" />
+          <Parameter Name="DESCRIPCION" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="PRUEBAModelStoreContainer">
+          <EntitySet Name="PERSONA" EntityType="Self.PERSONA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAREA" EntityType="Self.TAREA" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK1" Association="Self.FK1">
+            <End Role="PERSONA" EntitySet="PERSONA" />
+            <End Role="TAREA" EntitySet="TAREA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PRUEBAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="PERSONA">
+          <Key>
+            <PropertyRef Name="ID_P" />
+          </Key>
+          <Property Name="ID_P" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="APELLIDO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TAREA" Relationship="Self.FK1" FromRole="PERSONA" ToRole="TAREA" />
+        </EntityType>
+        <EntityType Name="TAREA">
+          <Key>
+            <PropertyRef Name="ID_T" />
+          </Key>
+          <Property Name="ID_T" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DESCRIPCION" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_P" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PERSONA" Relationship="Self.FK1" FromRole="TAREA" ToRole="PERSONA" />
+        </EntityType>
+        <Association Name="FK1">
+          <End Role="PERSONA" Type="Self.PERSONA" Multiplicity="1" />
+          <End Role="TAREA" Type="Self.TAREA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONA">
+              <PropertyRef Name="ID_P" />
+            </Principal>
+            <Dependent Role="TAREA">
+              <PropertyRef Name="ID_P" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PRUEBAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PERSONA" EntityType="Self.PERSONA" />
+          <EntitySet Name="TAREA" EntityType="Self.TAREA" />
+          <AssociationSet Name="FK1" Association="Self.FK1">
+            <End Role="PERSONA" EntitySet="PERSONA" />
+            <End Role="TAREA" EntitySet="TAREA" />
+          </AssociationSet>
+          <FunctionImport Name="SPA_DELETEPERSONA">
+            <Parameter Name="ID_P" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPA_DELETETAREA">
+            <Parameter Name="ID_T" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPA_INSERTPERSONA">
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="APELLIDO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPA_INSERTTAREA">
+            <Parameter Name="DESCRIPCION" Mode="In" Type="String" />
+            <Parameter Name="ID_P" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPA_UPDATEPERSONA">
+            <Parameter Name="ID_P" Mode="In" Type="Int32" />
+            <Parameter Name="NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="APELLIDO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPA_UPDATETARE">
+            <Parameter Name="ID_T" Mode="In" Type="Int32" />
+            <Parameter Name="DESCRIPCION" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PRUEBAModelStoreContainer" CdmEntityContainer="PRUEBAEntities">
+          <EntitySetMapping Name="PERSONA">
+            <EntityTypeMapping TypeName="PRUEBAModel.PERSONA">
+              <MappingFragment StoreEntitySet="PERSONA">
+                <ScalarProperty Name="ID_P" ColumnName="ID_P" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="APELLIDO" ColumnName="APELLIDO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAREA">
+            <EntityTypeMapping TypeName="PRUEBAModel.TAREA">
+              <MappingFragment StoreEntitySet="TAREA">
+                <ScalarProperty Name="ID_T" ColumnName="ID_T" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="ID_P" ColumnName="ID_P" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPA_DELETEPERSONA" FunctionName="PRUEBAModel.Store.SPA_DELETEPERSONA" />
+          <FunctionImportMapping FunctionImportName="SPA_DELETETAREA" FunctionName="PRUEBAModel.Store.SPA_DELETETAREA" />
+          <FunctionImportMapping FunctionImportName="SPA_INSERTPERSONA" FunctionName="PRUEBAModel.Store.SPA_INSERTPERSONA" />
+          <FunctionImportMapping FunctionImportName="SPA_INSERTTAREA" FunctionName="PRUEBAModel.Store.SPA_INSERTTAREA" />
+          <FunctionImportMapping FunctionImportName="SPA_UPDATEPERSONA" FunctionName="PRUEBAModel.Store.SPA_UPDATEPERSONA" />
+          <FunctionImportMapping FunctionImportName="SPA_UPDATETARE" FunctionName="PRUEBAModel.Store.SPA_UPDATETARE" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
